@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Timer</title>
+  <style>
+    body {
+      background-color: #e6f0f5; 
+      font-family: 'Georgia', serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      font-size: 48px;
+      color: #3b4b50;
+      margin-bottom: 30px;
+      letter-spacing: 2px;
+    }
+
+    #time {
+      font-size: 48px;
+      color: black;
+      margin-bottom: 40px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 20px;
+    }
+
+    button {
+      padding: 12px 24px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      font-weight: bold;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    #start {
+      background-color: #6ba7b2; 
+      border-color: #333;
+      color: black;
+    }
+
+    #stop {
+      background-color: red;
+      color: black;
+    }
+
+    #reset {
+      background-color: #baf5b0;
+      color: black;
+    }
+
+    button:hover {
+      opacity: 0.85;
+    }
+  </style>
+</head>
+<body>
+  <h1>TIMER</h1>
+  <div id="time">00:00</div>
+  <div class="buttons">
+    <button id="start">START</button>
+    <button id="stop">STOP</button>
+    <button id="reset">RESET</button>
+  </div>
+
+  <script>
+    let time = 0; 
+    let timer;
+    let isRunning = false;
+
+    const display = document.getElementById("time");
+    const startBtn = document.getElementById("start");
+    const stopBtn = document.getElementById("stop");
+    const resetBtn = document.getElementById("reset");
+
+    function updateDisplay() {
+      let minutes = Math.floor(time / 60);
+      let seconds = time % 60;
+      display.textContent = `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+    }
+
+    startBtn.addEventListener("click", () => {
+      if (!isRunning) {
+        timer = setInterval(() => {
+          time++;
+          updateDisplay();
+        }, 1000);
+        isRunning = true;
+      }
+    });
+
+    stopBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      isRunning = false;
+    });
+
+    resetBtn.addEventListener("click", () => {
+      clearInterval(timer);
+      time = 0;
+      updateDisplay();
+      isRunning = false;
+    });
+
+    updateDisplay(); 
+  </script>
+</body>
+</html>
